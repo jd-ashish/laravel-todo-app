@@ -33,12 +33,12 @@ class TodoController extends Controller
 
         $data = $request;
 
-        return $data;
 
-        $todo = new Todo;
-        $post->id = $data['id']; //already exists in database.
-        $post->status = $data['status'];
-        $post->save();
+        $todo = Todo::firstOrNew([
+            'id' => $data->id
+        ]);
+        $todo->status = $data->status;
+        $todo->update();
 
         return json_encode(["message" => "Data update successsfully"]);
 
